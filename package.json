@@ -15,7 +15,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "server:seed": "node tools/seed-json-file.mjs",
+    "server:serve":"json-server tools/data.json -p 3001"
   },
   "browserslist": {
     "production": [
@@ -30,9 +32,11 @@
     ]
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.3.1",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.2",
+    "json-server": "^1.0.0-alpha.13",
     "prettier": "3.1.1",
     "tailwindcss": "^3.4.1"
   }
