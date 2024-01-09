@@ -1,9 +1,11 @@
+import { Button } from '@nextui-org/react';
+
 function App() {
     return (
         <div className="App">
-            <button className="bg-blue-300 text-white inline p-4 rounded-lg">
+            <Button variant={'shadow'} color={'secondary'}>
                 Test
-            </button>
+            </Button>
         </div>
     );
 }
