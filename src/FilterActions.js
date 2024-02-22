@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from '@nextui-org/react';
+import PropTypes from 'prop-types';
 
 const FilterActions = ({ filter, setFilter }) => {
     const onClickFilter = (filterKey) => {
@@ -28,6 +29,14 @@ const FilterActions = ({ filter, setFilter }) => {
             </Button>
         </div>
     );
+};
+
+FilterActions.propTypes = {
+    filter: PropTypes.string.isRequired,
+    setFilter: PropTypes.func.isRequired,
+
+    // count: PropTypes.number,
+    // isVisible: PropTypes.bool.isRequired,
 };
 
 export default FilterActions;
