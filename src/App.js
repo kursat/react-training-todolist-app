@@ -1,5 +1,10 @@
 import { Button, Input } from '@nextui-org/react';
 import { useState } from 'react';
+import FilterActions from './FilterActions';
+
+// TODO: TodoItem component oluşturulacak.
+// TODO: TodoItem altındaki butonlar TodoItemActions componentına bölünecek.
+// TODO: Input ve ekle butonu TodoEditor componentına taşınacak.
 
 function App() {
     const [inputValue, setInputValue] = useState('');
@@ -58,10 +63,6 @@ function App() {
     };
     const onClickDeleteTodoItem = (todoId) => {
         setTodos(todos.filter((todo) => todo.id !== todoId));
-    };
-
-    const onClickFilter = (filterKey) => {
-        setFilter(filterKey);
     };
 
     const onClickUpdateTodoItem = (todoId) => {
@@ -137,26 +138,7 @@ function App() {
                     {/* TODO Update ediyorsak butonun texti değişecek */}
                     <Button onClick={onClickAdd}>Ekle</Button>
                 </div>
-                <div className="mt-4 flex gap-1 justify-center items-center">
-                    <Button
-                        onClick={() => onClickFilter('all')}
-                        color={filter === 'all' ? 'primary' : 'default'}
-                    >
-                        Hepsi
-                    </Button>
-                    <Button
-                        onClick={() => onClickFilter('completed')}
-                        color={filter === 'completed' ? 'primary' : 'default'}
-                    >
-                        Tamamlananlar
-                    </Button>
-                    <Button
-                        onClick={() => onClickFilter('pending')}
-                        color={filter === 'pending' ? 'primary' : 'default'}
-                    >
-                        Bekleyenler
-                    </Button>
-                </div>
+                <FilterActions filter={filter} setFilter={setFilter} />
             </div>
         </div>
     );
