@@ -1,15 +1,15 @@
-import { Button, Input } from '@nextui-org/react';
-import { useState } from 'react';
-import FilterActions from './FilterActions';
-
-// TODO: TodoItem component oluşturulacak.
-// TODO: TodoItem altındaki butonlar TodoItemActions componentına bölünecek.
-// TODO: Input ve ekle butonu TodoEditor componentına taşınacak.
+import React, { useState } from 'react';
+import FilterActions from './components/FilterActions';
+import TodoEditor from './components/TodoEditor';
+import TodoList from './components/TodoList';
+import TodosContainer from './components/TodosContainer';
 
 function App() {
     const [inputValue, setInputValue] = useState('');
-    const [filter, setFilter] = useState('all');
-    // all, completed, pending
+    const [filter, setFilter] = useState('all'); // all, completed, pending
+
+    const [itemBeingEdited, setItemBeingEdited] = useState();
+
     const [todos, setTodos] = useState([
         {
             id: 1,
@@ -35,16 +35,28 @@ function App() {
     const onClickAdd = () => {
         if (!inputValue) return;
 
-        // TODO Update ediyor muyuz kontrolu yapacağız
-
-        setTodos([
-            ...todos,
-            {
-                id: Math.random(),
-                text: inputValue,
-                checked: false,
-            },
-        ]);
+        if (itemBeingEdited) {
+            setTodos(
+                todos.map((todo) => {
+                    if (todo.id === itemBeingEdited)
+                        return {
+                            ...todo,
+                            text: inputValue,
+                        };
+                    else return todo;
+                })
+            );
+        } else {
+            setTodos([
+                ...todos,
+                {
+                    id: Math.random(),
+                    text: inputValue,
+                    checked: false,
+                },
+            ]);
+        }
+        setItemBeingEdited();
         setInputValue('');
     };
 
@@ -68,8 +80,7 @@ function App() {
     const onClickUpdateTodoItem = (todoId) => {
         const todoToEdit = todos.find((todo) => todo.id === todoId);
 
-        // TODO: update edilecek itemin idsi set edilecek
-
+        setItemBeingEdited(todoToEdit.id);
         setInputValue(todoToEdit.text);
     };
 
@@ -88,58 +99,23 @@ function App() {
 
     return (
         <div className="App">
-            <div className="h-dvh bg-gray-100 flex items-center flex-col justify-center">
-                <div className="mt-2 actions flex flex-col gap-1 w-72">
-                    {filteredTodos.map((todo) => {
-                        const classes = `cursor-pointer flex justify-between`;
+            {/*TODO unmount component*/}
 
-                        return (
-                            <div
-                                key={todo.id}
-                                className={classes}
-                                onClick={() => onClickTodoItem(todo.id)}
-                            >
-                                <span
-                                    className={
-                                        todo.checked ? 'line-through' : ''
-                                    }
-                                >
-                                    {todo.text}
-                                </span>
-                                <Button
-                                    size={'sm'}
-                                    color={'danger'}
-                                    onClick={() =>
-                                        onClickDeleteTodoItem(todo.id)
-                                    }
-                                >
-                                    Delete
-                                </Button>
-                                <Button
-                                    size={'sm'}
-                                    color={'warning'}
-                                    onClick={() =>
-                                        onClickUpdateTodoItem(todo.id)
-                                    }
-                                >
-                                    Edit
-                                </Button>
-                            </div>
-                        );
-                    })}
-                </div>
-                <div className="mt-4 flex justify-center items-center">
-                    <Input
-                        value={inputValue}
-                        onChange={onChangeInput}
-                        variant={'underlined'}
-                        label={'New Todo'}
-                    />
-                    {/* TODO Update ediyorsak butonun texti değişecek */}
-                    <Button onClick={onClickAdd}>Ekle</Button>
-                </div>
+            <TodosContainer>
+                <TodoList
+                    todos={filteredTodos}
+                    onClickUpdateTodoItem={onClickUpdateTodoItem}
+                    onClickTodoItem={onClickTodoItem}
+                    onClickDeleteTodoItem={onClickDeleteTodoItem}
+                />
+                <TodoEditor
+                    inputValue={inputValue}
+                    onChangeInput={onChangeInput}
+                    onClickAdd={onClickAdd}
+                    itemBeingEdited={itemBeingEdited}
+                />
                 <FilterActions filter={filter} setFilter={setFilter} />
-            </div>
+            </TodosContainer>
         </div>
     );
 }
