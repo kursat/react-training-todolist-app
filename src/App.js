@@ -114,7 +114,13 @@ function App() {
                     onClickAdd={onClickAdd}
                     itemBeingEdited={itemBeingEdited}
                 />
-                <FilterActions filter={filter} setFilter={setFilter} />
+                <FilterActions
+                    // header={<div className="bg-blue-300">Filter Actions</div>}
+                    filter={filter}
+                    setFilter={setFilter}
+                >
+                    <div>Children</div>
+                </FilterActions>
             </TodosContainer>
         </div>
     );
