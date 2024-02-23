@@ -3,6 +3,7 @@ import FilterActions from './components/FilterActions';
 import TodoEditor from './components/TodoEditor';
 import TodoList from './components/TodoList';
 import TodosContainer from './components/TodosContainer';
+import SampleClassComponent from './SampleClassComponent';
 
 function App() {
     const [inputValue, setInputValue] = useState('');
@@ -122,6 +123,7 @@ function App() {
                     <div>Children</div>
                 </FilterActions>
             </TodosContainer>
+            {/*<SampleClassComponent prop1={1} />*/}
         </div>
     );
 }
