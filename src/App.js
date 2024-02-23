@@ -3,7 +3,8 @@ import FilterActions from './components/FilterActions';
 import TodoEditor from './components/TodoEditor';
 import TodoList from './components/TodoList';
 import TodosContainer from './components/TodosContainer';
-import SampleClassComponent from './SampleClassComponent';
+import Clock from './components/Clock';
+import { Button } from '@nextui-org/react';
 
 function App() {
     const [inputValue, setInputValue] = useState('');
@@ -15,16 +16,6 @@ function App() {
         {
             id: 1,
             text: 'Todo 1',
-            checked: false,
-        },
-        {
-            id: 2,
-            text: 'Todo 2',
-            checked: false,
-        },
-        {
-            id: 3,
-            text: 'Todo 3',
             checked: false,
         },
     ]);
@@ -98,10 +89,12 @@ function App() {
         }
     });
 
+    const [isClockOpen, setIsClockOpen] = useState(true);
+
     return (
         <div className="App">
-            {/*TODO unmount component*/}
-
+            {isClockOpen && <Clock />}
+            <Button onClick={() => setIsClockOpen(!isClockOpen)}>Toggle</Button>
             <TodosContainer>
                 <TodoList
                     todos={filteredTodos}

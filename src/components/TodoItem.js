@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import TodoItemActions from './TodoItemActions';
 import PropTypes from 'prop-types';
 
@@ -8,6 +8,10 @@ const TodoItem = ({
     onClickDeleteTodoItem,
     onClickUpdateTodoItem,
 }) => {
+    useEffect(() => {
+        console.log('effect');
+    }, [todo]);
+
     const classes = `flex-1 ${todo.checked ? 'line-through' : ''}`;
 
     return (
