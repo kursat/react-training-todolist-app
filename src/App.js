@@ -3,6 +3,9 @@ import FilterActions from './components/FilterActions';
 import TodoEditor from './components/TodoEditor';
 import TodoList from './components/TodoList';
 import TodosContainer from './components/TodosContainer';
+import useTodos from './hooks/useTodos';
+import useWSData from './hooks/useWSData';
+import { CircularProgress } from '@nextui-org/react';
 
 function App() {
     const [inputValue, setInputValue] = useState('');
@@ -10,24 +13,17 @@ function App() {
 
     const [itemBeingEdited, setItemBeingEdited] = useState();
 
-    const [todos, setTodos] = useState([]);
+    // const { todos, setIsFetched } = useTodos();
 
-    const [isFetched, setIsFetched] = useState(false);
+    const {
+        data: todos,
+        setIsFetched,
+        isFetching,
+    } = useWSData('http://localhost:3001/todos');
 
-    useEffect(() => {
-        if (!isFetched) {
-            fetch('http://localhost:3001/todos', {
-                method: 'GET',
-                headers: {},
-            })
-                .then((response) => response.json())
-                .then((result) => {
-                    setTodos(result);
-                    setIsFetched(true);
-                });
-        }
-        return () => {};
-    }, [isFetched]);
+    const { data: users } = useWSData('http://localhost:3001/users');
+
+    console.log('users', users);
 
     const onChangeInput = (e) => {
         setInputValue(e.target.value);
@@ -86,14 +82,27 @@ function App() {
         }
     });
 
+    // if (isFetching) {
+    //     return (
+    //         <div className="h-dvh flex items-center justify-center">
+    //             <CircularProgress />
+    //         </div>
+    //     );
+    // }
+
     return (
         <div className="App">
             <TodosContainer>
-                <TodoList
-                    todos={filteredTodos}
-                    setIsFetched={setIsFetched}
-                    onClickUpdateTodoItem={onClickUpdateTodoItem}
-                />
+                {isFetching ? (
+                    <CircularProgress />
+                ) : (
+                    <TodoList
+                        todos={filteredTodos}
+                        setIsFetched={setIsFetched}
+                        onClickUpdateTodoItem={onClickUpdateTodoItem}
+                    />
+                )}
+
                 <TodoEditor
                     inputValue={inputValue}
                     onChangeInput={onChangeInput}

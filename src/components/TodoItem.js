@@ -1,12 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import TodoItemActions from './TodoItemActions';
 import PropTypes from 'prop-types';
 
 const TodoItem = ({ todo, setIsFetched, onClickUpdateTodoItem }) => {
-    useEffect(() => {
-        console.log('effect');
-    }, [todo]);
-
     const onClickTodoItem = (itemId) => {
         fetch(`http://localhost:3001/todos/${itemId}`, {
             method: 'PUT',
@@ -37,7 +33,7 @@ const TodoItem = ({ todo, setIsFetched, onClickUpdateTodoItem }) => {
 
 TodoItem.propTypes = {
     todo: PropTypes.shape({
-        id: PropTypes.number.isRequired,
+        id: PropTypes.string.isRequired,
         text: PropTypes.string.isRequired,
         checked: PropTypes.bool.isRequired,
     }),
