@@ -1,10 +1,37 @@
-import React, { useState } from 'react';
+import React, { useReducer, useState } from 'react';
 import FilterActions from './components/FilterActions';
 import TodoEditor from './components/TodoEditor';
 import TodoList from './components/TodoList';
 import TodosContainer from './components/TodosContainer';
-import TodoSampleRequest from './components/TodoSampleRequest';
-import { Button } from '@nextui-org/react';
+
+const initialState = [
+    {
+        id: 1,
+        text: 'Todo 1',
+        checked: false,
+    },
+    {
+        id: 2,
+        text: 'Todo 2',
+        checked: false,
+    },
+    {
+        id: 3,
+        text: 'Todo 3',
+        checked: false,
+    },
+];
+
+const reducer = (state, action) => {
+    switch (action.type) {
+        case 'delete':
+            return [...state.filter((i) => i.id !== action.payload)];
+        case 'add':
+            return [...state, action.payload];
+        default:
+            return state;
+    }
+};
 
 function App() {
     const [inputValue, setInputValue] = useState('');
@@ -12,13 +39,9 @@ function App() {
 
     const [itemBeingEdited, setItemBeingEdited] = useState();
 
-    const [todos, setTodos] = useState([
-        {
-            id: 1,
-            text: 'Todo 1',
-            checked: false,
-        },
-    ]);
+    const [todos, dispatch] = useReducer(reducer, initialState);
+
+    const setTodos = () => {};
 
     const onChangeInput = (e) => {
         setInputValue(e.target.value);
@@ -39,14 +62,14 @@ function App() {
                 })
             );
         } else {
-            setTodos([
-                ...todos,
-                {
+            dispatch({
+                type: 'add',
+                payload: {
                     id: Math.random(),
                     text: inputValue,
                     checked: false,
                 },
-            ]);
+            });
         }
         setItemBeingEdited();
         setInputValue('');
@@ -66,10 +89,17 @@ function App() {
         setTodos(updatedTodos);
     };
     const onClickDeleteTodoItem = (todoId) => {
-        setTodos(todos.filter((todo) => todo.id !== todoId));
+        dispatch({ type: 'delete', payload: todoId });
     };
 
     const onClickUpdateTodoItem = (todoId) => {
+        dispatch({
+            type: 'update',
+            payload: {
+                todoId,
+                // editedItem,
+            },
+        });
         const todoToEdit = todos.find((todo) => todo.id === todoId);
 
         setItemBeingEdited(todoToEdit.id);
@@ -93,8 +123,6 @@ function App() {
 
     return (
         <div className="App">
-            {/*{isClockOpen && <TodoSampleRequest />}*/}
-            <Button onClick={() => setIsClockOpen(!isClockOpen)}>Toggle</Button>
             <TodosContainer>
                 <TodoList
                     todos={filteredTodos}
@@ -109,14 +137,13 @@ function App() {
                     itemBeingEdited={itemBeingEdited}
                 />
                 <FilterActions
-                    // header={<div className="bg-blue-300">Filter Actions</div>}
+                    header={''}
                     filter={filter}
                     setFilter={setFilter}
                 >
                     <div>Children</div>
                 </FilterActions>
             </TodosContainer>
-            {/*<SampleClassComponent prop1={1} />*/}
         </div>
     );
 }
