@@ -3,7 +3,7 @@ import FilterActions from './components/FilterActions';
 import TodoEditor from './components/TodoEditor';
 import TodoList from './components/TodoList';
 import TodosContainer from './components/TodosContainer';
-import Clock from './components/Clock';
+import TodoSampleRequest from './components/TodoSampleRequest';
 import { Button } from '@nextui-org/react';
 
 function App() {
@@ -93,7 +93,7 @@ function App() {
 
     return (
         <div className="App">
-            {isClockOpen && <Clock />}
+            {/*{isClockOpen && <TodoSampleRequest />}*/}
             <Button onClick={() => setIsClockOpen(!isClockOpen)}>Toggle</Button>
             <TodosContainer>
                 <TodoList

@@ -96,6 +96,26 @@
       "id": 3,
       "text": "Todo 3 from json-server",
       "checked": false
+    },
+    {
+      "id": 0.9072489020178629,
+      "text": "New todo",
+      "checked": false
+    },
+    {
+      "id": 0.2214937734272049,
+      "text": "New todo",
+      "checked": false
+    },
+    {
+      "id": 0.030739063236072672,
+      "text": "New todo",
+      "checked": false
+    },
+    {
+      "id": 0.019486375959187896,
+      "text": "New todo",
+      "checked": false
     }
   ]
 }
