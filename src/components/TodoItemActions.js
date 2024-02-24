@@ -2,11 +2,16 @@ import React, { Fragment } from 'react';
 import { Button } from '@nextui-org/react';
 import { HiPencil, HiTrash } from 'react-icons/hi2';
 
-const TodoItemActions = ({
-    todo,
-    onClickDeleteTodoItem,
-    onClickUpdateTodoItem,
-}) => {
+const TodoItemActions = ({ todo, setIsFetched, onClickUpdateTodoItem }) => {
+    const onClickDeleteTodoItem = (itemId) => {
+        fetch(`http://localhost:3001/todos/${itemId}`, {
+            method: 'DELETE',
+            headers: {},
+        }).then(() => {
+            setIsFetched(false);
+        });
+    };
+
     return (
         <>
             <Button

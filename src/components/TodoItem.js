@@ -2,15 +2,21 @@ import React, { useEffect } from 'react';
 import TodoItemActions from './TodoItemActions';
 import PropTypes from 'prop-types';
 
-const TodoItem = ({
-    todo,
-    onClickTodoItem,
-    onClickDeleteTodoItem,
-    onClickUpdateTodoItem,
-}) => {
+const TodoItem = ({ todo, setIsFetched, onClickUpdateTodoItem }) => {
     useEffect(() => {
         console.log('effect');
     }, [todo]);
+
+    const onClickTodoItem = (itemId) => {
+        fetch(`http://localhost:3001/todos/${itemId}`, {
+            method: 'PUT',
+            headers: {},
+            body: JSON.stringify({
+                ...todo,
+                checked: !todo.checked,
+            }),
+        }).then(() => setIsFetched(false));
+    };
 
     const classes = `flex-1 ${todo.checked ? 'line-through' : ''}`;
 
@@ -22,7 +28,7 @@ const TodoItem = ({
             <span className={classes}>{todo.text}</span>
             <TodoItemActions
                 todo={todo}
-                onClickDeleteTodoItem={onClickDeleteTodoItem}
+                setIsFetched={setIsFetched}
                 onClickUpdateTodoItem={onClickUpdateTodoItem}
             />
         </div>

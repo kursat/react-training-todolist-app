@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import FilterActions from './components/FilterActions';
 import TodoEditor from './components/TodoEditor';
 import TodoList from './components/TodoList';
 import TodosContainer from './components/TodosContainer';
-import TodoSampleRequest from './components/TodoSampleRequest';
-import { Button } from '@nextui-org/react';
 
 function App() {
     const [inputValue, setInputValue] = useState('');
@@ -12,13 +10,24 @@ function App() {
 
     const [itemBeingEdited, setItemBeingEdited] = useState();
 
-    const [todos, setTodos] = useState([
-        {
-            id: 1,
-            text: 'Todo 1',
-            checked: false,
-        },
-    ]);
+    const [todos, setTodos] = useState([]);
+
+    const [isFetched, setIsFetched] = useState(false);
+
+    useEffect(() => {
+        if (!isFetched) {
+            fetch('http://localhost:3001/todos', {
+                method: 'GET',
+                headers: {},
+            })
+                .then((response) => response.json())
+                .then((result) => {
+                    setTodos(result);
+                    setIsFetched(true);
+                });
+        }
+        return () => {};
+    }, [isFetched]);
 
     const onChangeInput = (e) => {
         setInputValue(e.target.value);
@@ -28,45 +37,33 @@ function App() {
         if (!inputValue) return;
 
         if (itemBeingEdited) {
-            setTodos(
-                todos.map((todo) => {
-                    if (todo.id === itemBeingEdited)
-                        return {
-                            ...todo,
-                            text: inputValue,
-                        };
-                    else return todo;
-                })
-            );
+            const todo = todos.find((i) => i.id === itemBeingEdited);
+
+            fetch(`http://localhost:3001/todos/${itemBeingEdited}`, {
+                method: 'PUT',
+                headers: {},
+                body: JSON.stringify({
+                    ...todo,
+                    text: inputValue,
+                }),
+            }).then(() => {
+                setIsFetched(false);
+            });
         } else {
-            setTodos([
-                ...todos,
-                {
-                    id: Math.random(),
+            fetch('http://localhost:3001/todos', {
+                method: 'POST',
+                headers: {},
+                body: JSON.stringify({
+                    id: Math.random().toString(),
                     text: inputValue,
                     checked: false,
-                },
-            ]);
+                }),
+            }).then(() => {
+                setIsFetched(false);
+            });
         }
         setItemBeingEdited();
         setInputValue('');
-    };
-
-    const onClickTodoItem = (todoId) => {
-        const updatedTodos = todos.map((todo) => {
-            if (todo.id === todoId) {
-                return {
-                    ...todo,
-                    checked: !todo.checked,
-                };
-            }
-            return todo;
-        });
-
-        setTodos(updatedTodos);
-    };
-    const onClickDeleteTodoItem = (todoId) => {
-        setTodos(todos.filter((todo) => todo.id !== todoId));
     };
 
     const onClickUpdateTodoItem = (todoId) => {
@@ -89,18 +86,13 @@ function App() {
         }
     });
 
-    const [isClockOpen, setIsClockOpen] = useState(true);
-
     return (
         <div className="App">
-            {/*{isClockOpen && <TodoSampleRequest />}*/}
-            <Button onClick={() => setIsClockOpen(!isClockOpen)}>Toggle</Button>
             <TodosContainer>
                 <TodoList
                     todos={filteredTodos}
+                    setIsFetched={setIsFetched}
                     onClickUpdateTodoItem={onClickUpdateTodoItem}
-                    onClickTodoItem={onClickTodoItem}
-                    onClickDeleteTodoItem={onClickDeleteTodoItem}
                 />
                 <TodoEditor
                     inputValue={inputValue}
@@ -116,7 +108,6 @@ function App() {
                     <div>Children</div>
                 </FilterActions>
             </TodosContainer>
-            {/*<SampleClassComponent prop1={1} />*/}
         </div>
     );
 }

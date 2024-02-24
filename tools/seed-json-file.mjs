@@ -32,17 +32,17 @@ const data = {
   users,
   todos: [
     {
-      id: 1,
+      id: "1",
       text: 'Todo 1 from json-server',
       checked: false,
     },
     {
-      id: 2,
+      id: "2",
       text: 'Todo 2 from json-server',
       checked: false,
     },
     {
-      id: 3,
+      id: "3",
       text: 'Todo 3 from json-server',
       checked: false,
     },

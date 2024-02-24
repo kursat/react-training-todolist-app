@@ -1,120 +1,90 @@
 {
   "users": [
     {
-      "id": "1c3d25fcfa92f0a7fff0cf3b",
+      "id": "dcbac226b4aad694ec65fa1a",
       "sex": "male",
-      "firstName": "Rıdvan",
-      "lastName": "Ekşioğlu",
-      "fullName": "Rıdvan Ekşioğlu",
-      "email": "r8hdvan5@goc.gov.tr"
+      "firstName": "Yağız",
+      "lastName": "Aykaç",
+      "fullName": "Yağız Aykaç",
+      "email": "yag8hz29@goc.gov.tr"
     },
     {
-      "id": "1e2f0d5c1ee9f7f5ac9af432",
+      "id": "ff8bf024ba41aff7aeaba4f2",
       "sex": "male",
-      "firstName": "Hümayun",
-      "lastName": "Kıraç ",
-      "fullName": "Hümayun Kıraç ",
-      "email": "humayun.k8hrac35@goc.gov.tr"
+      "firstName": "Adnân",
+      "lastName": "Tanrıkulu",
+      "fullName": "Adnân Tanrıkulu",
+      "email": "adnan39@goc.gov.tr"
     },
     {
-      "id": "c6cbee39334febbb9dae502f",
-      "sex": "female",
-      "firstName": "Gülriz",
-      "lastName": "Kavaklıoğlu",
-      "fullName": "Gülriz Kavaklıoğlu",
-      "email": "gulriz79@goc.gov.tr"
-    },
-    {
-      "id": "c9e72113659c7e779cd34d2e",
+      "id": "25610c2a78b1d8b1fab6fafe",
       "sex": "male",
-      "firstName": "Tuhfe",
-      "lastName": "Ekşioğlu",
-      "fullName": "Prof. Dr. Tuhfe Ekşioğlu",
-      "email": "tuhfe_eksioglu49@goc.gov.tr"
-    },
-    {
-      "id": "4abd8d8bd7f3b8f3c9ecd0c5",
-      "sex": "female",
-      "firstName": "Leyla",
+      "firstName": "Miraç",
       "lastName": "Limoncuoğlu",
-      "fullName": "Leyla Limoncuoğlu",
-      "email": "leyla.limoncuoglu@goc.gov.tr"
+      "fullName": "Miraç Limoncuoğlu",
+      "email": "mirac74@goc.gov.tr"
     },
     {
-      "id": "51bd4e67ebbd9d85f6c0cda9",
+      "id": "f71d3725eae8ab50eb6ab394",
       "sex": "male",
-      "firstName": "Sami",
-      "lastName": "Kulaksızoğlu",
-      "fullName": "Sami Kulaksızoğlu",
-      "email": "sami16@goc.gov.tr"
+      "firstName": "Hüseyin",
+      "lastName": "Babaoğlu",
+      "fullName": "Hüseyin Babaoğlu",
+      "email": "huseyin.babaoglu@goc.gov.tr"
     },
     {
-      "id": "75be91caacbdfd1dc4f1feb3",
+      "id": "0158ebba9c047dcdba6df9a1",
       "sex": "female",
-      "firstName": "Nil",
-      "lastName": "Kurutluoğlu",
-      "fullName": "Nil Kurutluoğlu",
-      "email": "nil_kurutluoglu@goc.gov.tr"
+      "firstName": "Şengül",
+      "lastName": "Tokgöz",
+      "fullName": "Şengül Tokgöz",
+      "email": "sengul.tokgoz@goc.gov.tr"
     },
     {
-      "id": "4d1f3cc4da9ae8fcbb5fd4c7",
+      "id": "07e72adc6dedb7c1f2013e23",
       "sex": "male",
-      "firstName": "Emre",
-      "lastName": "Tuğlu",
-      "fullName": "Prof. Dr. Emre Tuğlu",
-      "email": "emre9@goc.gov.tr"
+      "firstName": "Halil",
+      "lastName": "Gürmen",
+      "fullName": "Halil Gürmen",
+      "email": "halil.gurmen97@goc.gov.tr"
     },
     {
-      "id": "d5fd7bee5ecba9fc4abeaacb",
-      "sex": "male",
-      "firstName": "Mirza",
-      "lastName": "Özdoğan",
-      "fullName": "Mirza Özdoğan",
-      "email": "mirza.ozdogan@goc.gov.tr"
+      "id": "abe094a54fee116cdc3dd364",
+      "sex": "female",
+      "firstName": "Lida",
+      "lastName": "Atan",
+      "fullName": "Lida Atan",
+      "email": "lida33@goc.gov.tr"
     },
     {
-      "id": "d2eaa1a513b2d4672a8bd039",
+      "id": "30cbc4ded4a9e5dcacdfd377",
+      "sex": "female",
+      "firstName": "İlayda",
+      "lastName": "Adal",
+      "fullName": "İlayda Adal",
+      "email": "ilayda_adal@goc.gov.tr"
+    },
+    {
+      "id": "c243d14737cbc52b68ffa5d2",
+      "sex": "female",
+      "firstName": "Müesser",
+      "lastName": "Tütüncü",
+      "fullName": "Müesser Tütüncü",
+      "email": "muesser14@goc.gov.tr"
+    },
+    {
+      "id": "bb88b3fed98719e9aff7c74c",
       "sex": "male",
-      "firstName": "Mutasım",
-      "lastName": "Koyuncu",
-      "fullName": "Mutasım Koyuncu",
-      "email": "mutas8hm97@goc.gov.tr"
+      "firstName": "Rauf",
+      "lastName": "Alpuğan",
+      "fullName": "Rauf Alpuğan",
+      "email": "rauf.alpugan22@goc.gov.tr"
     }
   ],
   "todos": [
     {
-      "id": 1,
-      "text": "Todo 1 from json-server",
-      "checked": false
-    },
-    {
-      "id": 2,
-      "text": "Todo 2 from json-server",
-      "checked": false
-    },
-    {
-      "id": 3,
-      "text": "Todo 3 from json-server",
-      "checked": false
-    },
-    {
-      "id": 0.9072489020178629,
-      "text": "New todo",
-      "checked": false
-    },
-    {
-      "id": 0.2214937734272049,
-      "text": "New todo",
-      "checked": false
-    },
-    {
-      "id": 0.030739063236072672,
-      "text": "New todo",
-      "checked": false
-    },
-    {
-      "id": 0.019486375959187896,
-      "text": "New todo",
+      "id": "0.24378688106481183",
+      "text": "sadww",
       "checked": false
     }
   ]
