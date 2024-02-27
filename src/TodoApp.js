@@ -1,12 +1,18 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, lazy, useState, Suspense } from 'react';
 import FilterActions from './components/FilterActions';
 import TodoEditor from './components/TodoEditor';
 import TodoList from './components/TodoList';
-import TodosContainer from './components/TodosContainer';
-import { CircularProgress } from '@nextui-org/react';
+import { Button, CircularProgress } from '@nextui-org/react';
 import { TodoContext } from './contexts/TodoContext';
 
+const TodosContainer = lazy(
+    () =>
+        import(/* webpackChunkName: "todos" */ './components/TodosContainer.js')
+);
+
 function TodoApp() {
+    const [isVisible, setIsVisible] = useState(false);
+
     const context = useContext(TodoContext);
 
     if (!context) {
@@ -15,12 +21,23 @@ function TodoApp() {
 
     return (
         <div className="App">
-            <TodosContainer>
-                {context.isFetching ? <CircularProgress /> : <TodoList />}
+            <Button onClick={() => setIsVisible(!isVisible)}>
+                Show/Hide App
+            </Button>
+            {isVisible && (
+                <Suspense fallback={<CircularProgress />}>
+                    <TodosContainer>
+                        {context.isFetching ? (
+                            <CircularProgress />
+                        ) : (
+                            <TodoList />
+                        )}
 
-                <TodoEditor />
-                <FilterActions />
-            </TodosContainer>
+                        <TodoEditor />
+                        <FilterActions />
+                    </TodosContainer>
+                </Suspense>
+            )}
         </div>
     );
 }
