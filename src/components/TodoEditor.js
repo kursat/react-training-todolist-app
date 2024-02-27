@@ -1,25 +1,24 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Button, Input } from '@nextui-org/react';
+import { TodoContext } from '../contexts/TodoContext';
 
-const TodoEditor = ({
-    inputValue,
-    onChangeInput,
-    onClickAdd,
-    itemBeingEdited,
-}) => {
+const TodoEditor = () => {
+    const { selectedItem, inputValue, setInputValue, saveTodoItem } =
+        useContext(TodoContext);
+
     return (
         <div className="mt-4 flex justify-center items-center">
             <Input
                 value={inputValue}
-                onChange={onChangeInput}
+                onChange={(e) => setInputValue(e.target.value)}
                 variant={'underlined'}
                 label={'New Todo'}
             />
             <Button
-                onClick={onClickAdd}
-                color={itemBeingEdited ? 'warning' : 'success'}
+                onClick={saveTodoItem}
+                color={selectedItem ? 'warning' : 'success'}
             >
-                {itemBeingEdited ? 'Kaydet...' : 'Ekle'}
+                {selectedItem ? 'Kaydet...' : 'Ekle'}
             </Button>
         </div>
     );

@@ -1,14 +1,17 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { Button } from '@nextui-org/react';
 import { HiPencil, HiTrash } from 'react-icons/hi2';
+import { TodoContext } from '../contexts/TodoContext';
 
-const TodoItemActions = ({ todo, setIsFetched, onClickUpdateTodoItem }) => {
+const TodoItemActions = ({ todo }) => {
+    const { refetch, onClickUpdateTodoItem } = useContext(TodoContext);
+
     const onClickDeleteTodoItem = (itemId) => {
         fetch(`http://localhost:3001/todos/${itemId}`, {
             method: 'DELETE',
             headers: {},
         }).then(() => {
-            setIsFetched(false);
+            refetch();
         });
     };
 

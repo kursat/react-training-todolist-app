@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Button } from '@nextui-org/react';
-import PropTypes from 'prop-types';
+import { TodoContext } from '../contexts/TodoContext';
 
-const FilterActions = ({ filter, setFilter, header }) => {
+const FilterActions = () => {
+    const { filter, setFilter } = useContext(TodoContext);
+
     const onClickFilter = (filterKey) => {
         setFilter(filterKey);
     };
 
     return (
         <div className="mt-4 flex gap-1 justify-center items-center">
-            {header}
             <Button
                 onClick={() => onClickFilter('all')}
                 color={filter === 'all' ? 'primary' : 'default'}
@@ -30,20 +31,6 @@ const FilterActions = ({ filter, setFilter, header }) => {
             </Button>
         </div>
     );
-};
-
-FilterActions.propTypes = {
-    filter: PropTypes.oneOf(['all', 'completed', 'pending']).isRequired,
-    setFilter: PropTypes.func.isRequired,
-    header: PropTypes.node,
-
-    // count: PropTypes.number,
-    // isVisible: PropTypes.bool.isRequired,
-    // todos: PropTypes.array.isRequired,
-};
-
-FilterActions.defaultProps = {
-    header: 'Default Header',
 };
 
 export default FilterActions;

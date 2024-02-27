@@ -10,23 +10,21 @@ const useWSData = (url) => {
         if (!isFetched) {
             setIsFetching(true);
 
-            setTimeout(() => {
-                fetch(url, {
-                    method: 'GET',
-                    headers: {},
+            fetch(url, {
+                method: 'GET',
+                headers: {},
+            })
+                .then((response) => response.json())
+                .then((result) => {
+                    setData(result);
+                    setIsFetched(true);
                 })
-                    .then((response) => response.json())
-                    .then((result) => {
-                        setData(result);
-                        setIsFetched(true);
-                    })
-                    .catch((e) => {
-                        setError('Bir hata oluştu');
-                    })
-                    .finally(() => {
-                        setIsFetching(false);
-                    });
-            }, 3000);
+                .catch((e) => {
+                    setError('Bir hata oluştu');
+                })
+                .finally(() => {
+                    setIsFetching(false);
+                });
         }
         return () => {};
     }, [isFetched, url]);
@@ -36,6 +34,7 @@ const useWSData = (url) => {
         error,
         isFetching,
         setIsFetched,
+        refetch: () => setIsFetched(false),
     };
 };
 

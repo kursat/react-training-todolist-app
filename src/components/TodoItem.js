@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import TodoItemActions from './TodoItemActions';
 import PropTypes from 'prop-types';
+import { TodoContext } from '../contexts/TodoContext';
 
-const TodoItem = ({ todo, setIsFetched, onClickUpdateTodoItem }) => {
+const TodoItem = ({ todo }) => {
+    const { refetch } = useContext(TodoContext);
+
     const onClickTodoItem = (itemId) => {
         fetch(`http://localhost:3001/todos/${itemId}`, {
             method: 'PUT',
@@ -11,7 +14,7 @@ const TodoItem = ({ todo, setIsFetched, onClickUpdateTodoItem }) => {
                 ...todo,
                 checked: !todo.checked,
             }),
-        }).then(() => setIsFetched(false));
+        }).then(() => refetch());
     };
 
     const classes = `flex-1 ${todo.checked ? 'line-through' : ''}`;
@@ -22,11 +25,7 @@ const TodoItem = ({ todo, setIsFetched, onClickUpdateTodoItem }) => {
             onClick={() => onClickTodoItem(todo.id)}
         >
             <span className={classes}>{todo.text}</span>
-            <TodoItemActions
-                todo={todo}
-                setIsFetched={setIsFetched}
-                onClickUpdateTodoItem={onClickUpdateTodoItem}
-            />
+            <TodoItemActions todo={todo} />
         </div>
     );
 };
