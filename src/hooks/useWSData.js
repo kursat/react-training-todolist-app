@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 const useWSData = (url) => {
     const [data, setData] = useState([]);
@@ -29,12 +29,16 @@ const useWSData = (url) => {
         return () => {};
     }, [isFetched, url]);
 
+    const refetch = useCallback(() => {
+        setIsFetched(false);
+    }, []);
+
     return {
         data,
         error,
         isFetching,
         setIsFetched,
-        refetch: () => setIsFetched(false),
+        refetch,
     };
 };
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { TodoContext } from './TodoContext';
 import useWSData from '../hooks/useWSData';
 
@@ -14,27 +14,32 @@ const TodoProvider = ({ children }) => {
         refetch,
     } = useWSData('http://localhost:3001/todos');
 
-    const filteredTodos = todos.filter((todo) => {
-        switch (filter) {
-            case 'all':
-                return true;
-            case 'completed':
-                return todo.checked === true;
-            case 'pending':
-                return todo.checked === false;
-            default:
-                return false;
-        }
-    });
+    const filteredTodos = useMemo(() => {
+        return todos.filter((todo) => {
+            switch (filter) {
+                case 'all':
+                    return true;
+                case 'completed':
+                    return todo.checked === true;
+                case 'pending':
+                    return todo.checked === false;
+                default:
+                    return false;
+            }
+        });
+    }, [filter, todos]);
 
-    const onClickUpdateTodoItem = (todoId) => {
-        const todoToEdit = todos.find((todo) => todo.id === todoId);
+    const onClickUpdateTodoItem = useCallback(
+        (todoId) => {
+            const todoToEdit = todos.find((todo) => todo.id === todoId);
 
-        setSelectedItem(todoToEdit.id);
-        setInputValue(todoToEdit.text);
-    };
+            setSelectedItem(todoToEdit.id);
+            setInputValue(todoToEdit.text);
+        },
+        [todos]
+    );
 
-    const saveTodoItem = () => {
+    const saveTodoItem = useCallback(() => {
         if (!inputValue) return;
 
         if (selectedItem) {
@@ -48,7 +53,7 @@ const TodoProvider = ({ children }) => {
                     text: inputValue,
                 }),
             }).then(() => {
-                refetch(false);
+                refetch();
             });
         } else {
             fetch('http://localhost:3001/todos', {
@@ -60,13 +65,13 @@ const TodoProvider = ({ children }) => {
                     checked: false,
                 }),
             }).then(() => {
-                refetch(false);
+                refetch();
             });
         }
 
         setSelectedItem();
         setInputValue('');
-    };
+    }, [inputValue, refetch, selectedItem, todos]);
 
     return (
         <TodoContext.Provider

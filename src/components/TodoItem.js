@@ -1,21 +1,23 @@
-import React, { useContext } from 'react';
+import React, { memo, useCallback } from 'react';
 import TodoItemActions from './TodoItemActions';
 import PropTypes from 'prop-types';
-import { TodoContext } from '../contexts/TodoContext';
 
-const TodoItem = ({ todo }) => {
-    const { refetch } = useContext(TodoContext);
+const TodoItem = ({ todo, refetch }) => {
+    console.log('todo', todo);
 
-    const onClickTodoItem = (itemId) => {
-        fetch(`http://localhost:3001/todos/${itemId}`, {
-            method: 'PUT',
-            headers: {},
-            body: JSON.stringify({
-                ...todo,
-                checked: !todo.checked,
-            }),
-        }).then(() => refetch());
-    };
+    const onClickTodoItem = useCallback(
+        (itemId) => {
+            fetch(`http://localhost:3001/todos/${itemId}`, {
+                method: 'PUT',
+                headers: {},
+                body: JSON.stringify({
+                    ...todo,
+                    checked: !todo.checked,
+                }),
+            }).then(() => refetch());
+        },
+        [refetch, todo]
+    );
 
     const classes = `flex-1 ${todo.checked ? 'line-through' : ''}`;
 
@@ -38,4 +40,4 @@ TodoItem.propTypes = {
     }),
 };
 
-export default TodoItem;
+export default memo(TodoItem);
