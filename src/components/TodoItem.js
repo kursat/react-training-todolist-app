@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { memo } from 'react';
 import TodoItemActions from './TodoItemActions';
 import PropTypes from 'prop-types';
 
 const TodoItem = ({ todo, setIsFetched, onClickUpdateTodoItem }) => {
+    console.log('todo', todo);
+
     const onClickTodoItem = (itemId) => {
         fetch(`http://localhost:3001/todos/${itemId}`, {
             method: 'PUT',
@@ -39,4 +41,4 @@ TodoItem.propTypes = {
     }),
 };
 
-export default TodoItem;
+export default memo(TodoItem);

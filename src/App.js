@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import FilterActions from './components/FilterActions';
 import TodoEditor from './components/TodoEditor';
 import TodoList from './components/TodoList';
@@ -20,10 +20,6 @@ function App() {
         setIsFetched,
         isFetching,
     } = useWSData('http://localhost:3001/todos');
-
-    const { data: users } = useWSData('http://localhost:3001/users');
-
-    console.log('users', users);
 
     const onChangeInput = (e) => {
         setInputValue(e.target.value);
@@ -62,12 +58,15 @@ function App() {
         setInputValue('');
     };
 
-    const onClickUpdateTodoItem = (todoId) => {
-        const todoToEdit = todos.find((todo) => todo.id === todoId);
+    const onClickUpdateTodoItem = useCallback(
+        (todoId) => {
+            const todoToEdit = todos.find((todo) => todo.id === todoId);
 
-        setItemBeingEdited(todoToEdit.id);
-        setInputValue(todoToEdit.text);
-    };
+            setItemBeingEdited(todoToEdit.id);
+            setInputValue(todoToEdit.text);
+        },
+        [todos]
+    );
 
     const filteredTodos = todos.filter((todo) => {
         switch (filter) {
